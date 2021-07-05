@@ -9,7 +9,7 @@ def getVideoLink(link):
         link = re.findall(r' - (.*)', link)[0]
         r = requests.get(link)
         soup = BeautifulSoup(r.text, 'html.parser')
-        return soup.find("div", {"data-type": "video"}).get('data-source')
+        return soup.find("video").get('data-src')
     except:
         return "No video found"
 
