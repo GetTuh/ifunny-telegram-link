@@ -1,17 +1,24 @@
 from bs4 import BeautifulSoup
-import requests
+from selenium import webdriver
+import time
 import re
 from telegram.ext import MessageHandler, Filters
+from selenium.webdriver.firefox.options import Options
+
+options = Options()
+options.headless = True
+driver = webdriver.Firefox(options=options)
 
 
 def getVideoLink(link):
     try:
         link = re.findall(r' - (.*)', link)[0]
-        r = requests.get(link)
-        soup = BeautifulSoup(r.text, 'html.parser')
-        return soup.find("video").get('data-src')
-    except:
-        return "No video found"
+        driver.get(link)
+        time.sleep(3)
+        elem = driver.find_element_by_tag_name('video')
+        return elem.get_attribute('data-src')
+    except Exception as inst:
+        return str(inst)
 
 
 from telegram.ext import Updater
