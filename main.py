@@ -25,7 +25,7 @@ dispatcher = updater.dispatcher
 def echo(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text='Getting video...')
     videoLink = getVideoLink(update.message.text)
-    context.bot.send_photo(update.effective_chat.id, videoLink)
+    context.bot.send_video(update.effective_chat.id, videoLink)
 
 
 echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
