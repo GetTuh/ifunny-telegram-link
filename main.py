@@ -9,7 +9,11 @@ def getVideoLink(link):
         link = re.findall(r' - (.*)', link)[0]
         r = session.get(link)
         soup = BeautifulSoup(r.text, 'html.parser')
-        return soup.find("video").get('data-src')
+        # true if its an image
+        if(soup.find_all("img")[1].get('src')[-1]=="g"):
+            return soup.find_all("img")[1].get('src')
+        else:
+            return soup.find("video").get('data-src')
     except Exception as e:
         return str('e')
 
@@ -23,10 +27,12 @@ dispatcher = updater.dispatcher
 
 
 def echo(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text='Getting video...')
+    context.bot.send_message(chat_id=update.effective_chat.id, text='Getting meme... skrrr')
     videoLink = getVideoLink(update.message.text)
-    context.bot.send_video(update.effective_chat.id, videoLink)
-
+    try:
+        context.bot.send_video(update.effective_chat.id, videoLink)
+    except:
+        context.bot.send_photo(update.effective_chat.id, videoLink)
 
 echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
 dispatcher.add_handler(echo_handler)
