@@ -10,10 +10,11 @@ session=HTMLSession()
 def getVideoLink(link):
     try:
         link = re.findall(r' - (.*)', link)[0]
+        type = link.split('/')[3]
         r = session.get(link)
         soup = BeautifulSoup(r.text, 'html.parser')
         # true if its an image
-        if(soup.find_all("img")[1].get('src')[-1]=="g"):
+        if(type=='picture'):
             Image.open(urlopen(soup.find_all("img")[1].get('src'))).save('temp.jpg')
             with Image.open("temp.jpg") as im:
                 width, height = im.size
