@@ -27,7 +27,7 @@ def getVideoLink(link):
             return 0
         else:
             return soup.find('video').get('data-src')
-    except Exception, e:
+    except Exception as e:
         return str('Couldn\'t find image or video')
 
 
