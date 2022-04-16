@@ -32,10 +32,15 @@ def getVideoLink(link):
 
 
 from telegram.ext import Updater
-
-updater = Updater(token='1869794186:AAG4uMFkSjgSK2qFGnOJo4-UZw-gMxTGNeA'
-                  , use_context=True)
-dispatcher = updater.dispatcher
+if not(os.path.isfile('.token')):
+    print('.token file doesn\'t exist. Please create the file and include the Telegram token inside.')
+    exit()
+else:
+    with open('.token') as f:
+        token = f.readlines()
+    updater = Updater(token=token[0]
+                    , use_context=True)
+    dispatcher = updater.dispatcher
 
 
 def echo(update, context):
