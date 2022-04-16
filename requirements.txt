@@ -1,5 +1,4 @@
-beautifulsoup4==4.10.0
+beautifulsoup4==4.11.1
+Pillow==9.1.0
 requests_html==0.10.0
-telegram==0.0.1
-python-telegram-bot==13.8.1
-pillow==8.4.0
+python-telegram-bot==13.11
