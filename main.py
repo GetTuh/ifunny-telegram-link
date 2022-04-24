@@ -37,8 +37,8 @@ if not(os.path.isfile('.token')):
     exit()
 else:
     with open('.token') as f:
-        token = f.readlines()
-    updater = Updater(token=token[0]
+        token = f.readlines()[0].strip()
+    updater = Updater(token
                     , use_context=True)
     dispatcher = updater.dispatcher
 
