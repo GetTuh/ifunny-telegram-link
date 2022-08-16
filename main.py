@@ -13,7 +13,7 @@ session = HTMLSession()
 
 def getVideoLink(link):
     try:
-        link = re.findall(r' - (.*)', link)[0]
+        link = re.search("(?P<url>https?://[^\s]+)", link).group("url")
         type = link.split('/')[3]
         r = session.get(link)
         soup = BeautifulSoup(r.text, 'html.parser')
