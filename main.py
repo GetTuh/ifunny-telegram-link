@@ -1,12 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from telegram.ext import Updater
-from telegram.ext import MessageHandler, Filters
+from telegram.ext import MessageHandler, filters
 import os
 import socket
-
-session = HTMLSession()
-
 
 def getIP():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -30,6 +27,6 @@ def echo(update, context):
             text=getIP(), chat_id=update.effective_chat.id)
 
 
-echo_handler = MessageHandler(Filters.text & ~Filters.command, echo)
+echo_handler = MessageHandler(filters.text & ~filters.command, echo)
 dispatcher.add_handler(echo_handler)
 updater.start_polling()
