@@ -1,7 +1,6 @@
 # ifunny-telegram-link
 Sends an image or video from ifunny.co through telegram
-
-Automatic cropping of watermark included
+# This branch only includes fetching IP of the machine.
 
 ## Requirements:
 - python 3
