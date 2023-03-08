@@ -1,32 +1,35 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-from telegram.ext import Updater
-from telegram.ext import MessageHandler, filters
-import os
+import logging
+from telegram import Update
+from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
 import socket
+import os
 
-def getIP():
+def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
-    ip = (s.getsockname()[0])
+    ip = s.getsockname()[0]
     s.close()
     return ip
 
-if not (os.path.isfile('.token')):
-    print('.token file doesn\'t exist. Please create the file and include the Telegram token inside.')
-    exit()
-else:
-    with open('.token') as f:
-        token = f.readlines()[0].strip()
-    updater = Updater(token, use_context=True)
-    dispatcher = updater.dispatcher
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+)
 
-def echo(update, context):
-    if (update.message.text == 'ip'):
-        context.bot.send_message(
-            text=getIP(), chat_id=update.effective_chat.id)
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=get_ip())
 
+if __name__ == "__main__":
+    if not (os.path.isfile(".token")):
+        print(
+            ".token file doesn't exist. Please create the file and include the Telegram token inside."
+        )
+        exit()
+    else:
+        with open(".token") as f:
+            token = f.readlines()[0].strip()
+        application = ApplicationBuilder().token(token).build()
 
-echo_handler = MessageHandler(filters.text & ~filters.command, echo)
-dispatcher.add_handler(echo_handler)
-updater.start_polling()
+        start_handler = CommandHandler("ip", start)
+        application.add_handler(start_handler)
+
+        application.run_polling()
