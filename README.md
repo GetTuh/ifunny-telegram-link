@@ -13,7 +13,6 @@ Sends an image or video from ifunny.co through telegram
 ```
 git clone --branch Ip-only https://github.com/GetTuh/ifunny-telegram-link.git
 cd ifunny-telegram-link
-echo "YOUR BOT TOKEN HERE" > .token
 pip3 install -r requirements.txt
 ```
-& run *main.py* : `python3 main.py`
+& run *main.py* with token as an argument: `python3 main.py "YOUR BOT TOKEN HERE"`
