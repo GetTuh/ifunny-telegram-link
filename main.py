@@ -2,7 +2,12 @@ import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
 import socket
-import os
+import argparse
+
+parser = argparse.ArgumentParser(description='Telegram bot token')
+parser.add_argument('token', type=str,
+                    help='Telegram bot token')
+args = parser.parse_args()
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -19,16 +24,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text=get_ip())
 
 if __name__ == "__main__":
-    if not (os.path.isfile(".token")):
-        print(
-            ".token file doesn't exist. Please create the file and include the Telegram token inside."
-        )
-        exit()
-    else:
-        with open(".token") as f:
-            token = f.readlines()[0].strip()
-        application = ApplicationBuilder().token(token).build()
-
+        application = ApplicationBuilder().token(args.token).build()
         start_handler = CommandHandler("ip", start)
         application.add_handler(start_handler)
 
