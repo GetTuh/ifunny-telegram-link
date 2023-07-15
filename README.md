@@ -7,7 +7,7 @@ Sends an image or video from ifunny.co through telegram
 - pip
 - git
 - [telegram bot token](https://core.telegram.org/bots)
-- latest setuptools & wheel : `pip3 install --upgrade pip setuptools wheel`
+- latest setuptools & wheel : `pip3 install --upgrade pip setuptools wheel` or debian-based distros `sudo apt install python3-wheel python3-setuptools python3-pip`
 # USAGE:
 
 ```
